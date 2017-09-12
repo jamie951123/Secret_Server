@@ -39,5 +39,12 @@ dependencies {
 	// Use MySQL Connector-J
     compile 'mysql:mysql-connector-java'
 	compile 'com.google.code.gson:gson:2.8.0'
+	
+ 	//jwt
+    compile 'io.jsonwebtoken:jjwt:0.7.0'
+    
+    
     testCompile 'org.springframework.boot:spring-boot-starter-test'
+   
+	
 }

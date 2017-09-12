@@ -12,11 +12,16 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.filter.CharacterEncodingFilter;
+
+import com.jamie.secret.jwt.security.JwtAuthenticationFilter;
+import com.jamie.secret.jwt.security.JwtUtil;
 
 @ComponentScan
 @EnableAutoConfiguration
 @SpringBootApplication
+@RestController
 public class Application extends SpringBootServletInitializer{
 
 	 @Autowired
@@ -45,4 +50,13 @@ public class Application extends SpringBootServletInitializer{
        return registrationBean;
    }
 	
+   //Token filter
+   @Bean
+   public FilterRegistrationBean jwtFilter() {
+       final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+       JwtAuthenticationFilter filter = new JwtAuthenticationFilter(
+               JwtUtil.TOKEN_PATTERN);
+       registrationBean.setFilter(filter);
+       return registrationBean;
+   }
 }
