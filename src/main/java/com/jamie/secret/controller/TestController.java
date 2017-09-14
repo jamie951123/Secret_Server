@@ -19,7 +19,7 @@ public class TestController {
 	Logger log = LoggerFactory.getLogger(TestController.class);
 	
 	@Autowired
-	private TestService testService;
+	private TestService testService; 
 	
 	@RequestMapping("/hello")
 	public ModelAndView firstPage() {
