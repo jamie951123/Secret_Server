@@ -43,8 +43,8 @@ dependencies {
  	//jwt
     compile 'io.jsonwebtoken:jjwt:0.7.0'
     
-    
-    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    //replace getting and setting
+    compile 'org.projectlombok:lombok:1.16.18'
    
 	
 }

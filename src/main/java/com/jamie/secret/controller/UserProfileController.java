@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jamie.secret.model.TestModel;
-import com.jamie.secret.service.TestService;
+import com.jamie.secret.model.UserProfile;
+import com.jamie.secret.service.UserProfileService;
 
 @RequestMapping(value="/secret/authentication")
 @Controller
-public class TestController {
-	Logger log = LoggerFactory.getLogger(TestController.class);
+public class UserProfileController {
+	Logger log = LoggerFactory.getLogger(UserProfileController.class);
 	
 	@Autowired
-	private TestService testService; 
+	private UserProfileService userProfileService; 
 	
 	@RequestMapping("/hello")
 	public ModelAndView firstPage() {
@@ -27,9 +27,9 @@ public class TestController {
 	}
 	
 	@RequestMapping(value ="/findAll")
-	public @ResponseBody List<TestModel> findAll(){
-		List<TestModel> testModel = testService.findAll();
-		log.info("[TestModel]-[findAll]-User Response() : "+ testModel);
-		return testModel;
+	public @ResponseBody List<UserProfile> findAll(){
+		List<UserProfile> userProfiles = userProfileService.findAll();
+		log.info("[UserProfile]-[findAll]-User Response() : "+ userProfiles);
+		return userProfiles;
 	} 
 }
