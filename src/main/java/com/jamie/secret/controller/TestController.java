@@ -21,6 +21,7 @@ import com.jamie.secret.jwt.security.ValidCredentialsService;
 import com.jamie.secret.model.TestModel;
 import com.jamie.secret.service.TestService;
 
+@RequestMapping(value="/secret/authentication")
 @Controller
 public class TestController {
 	Logger log = LoggerFactory.getLogger(TestController.class);
@@ -36,22 +37,10 @@ public class TestController {
 		return new ModelAndView("hello");
 	}
 	
-	@RequestMapping(value ="/test/findAll")
+	@RequestMapping(value ="/findAll")
 	public @ResponseBody List<TestModel> findAll(){
 		List<TestModel> testModel = testService.findAll();
 		log.info("[TestModel]-[findAll]-User Response() : "+ testModel);
 		return testModel;
 	} 
-	
-	    @PostMapping("/login")
-	    public void login(HttpServletResponse response,
-	                      @RequestBody final AccountCredentials credentials) throws IOException {
-	        //here we just have one hardcoded username=admin and password=admin
-	        //TODO add your own user validation code here
-	        if(validCredentialsService.hardcodeChecking(credentials)) {
-	            String jwt = JwtUtil.generateToken(credentials.username);
-	            response.addHeader(JwtUtil.HEADER_STRING, JwtUtil.TOKEN_PREFIX + " " + jwt);
-	        }else
-	            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Wrong credentials");
-	    }
 }

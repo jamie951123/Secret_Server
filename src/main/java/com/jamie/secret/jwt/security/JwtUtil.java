@@ -10,7 +10,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JwtUtil {
     static final long EXPIRATION_TIME = 3600_000; // 1 hour
     static final String SECRET = "JamieSever";
-    public static final String TOKEN_PATTERN = "";
+    public static final String TOKEN_PATTERN = "/secret/authentication/**";
     public static final String TOKEN_PREFIX = "Token:";
     public static final String HEADER_STRING = "Authorization";
     public static String generateToken(String username) {
