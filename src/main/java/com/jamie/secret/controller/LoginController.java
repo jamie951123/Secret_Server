@@ -30,7 +30,7 @@ public class LoginController {
 	                      @RequestBody final UserProfile userProfile) throws IOException {
 	        //here we just have one hardcoded username=admin and password=admin
 	        //TODO add your own user validation code here
-	        if(loginService.hardcodeChecking(userProfile)) {
+	        if(loginService.generalChecking(userProfile)) {
 	            String jwt = JwtUtil.generateToken(userProfile.getUsername());
 	            response.addHeader(JwtUtil.HEADER_STRING, JwtUtil.TOKEN_PREFIX + " " + jwt);
 	        }else

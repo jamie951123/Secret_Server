@@ -20,4 +20,15 @@ public class UserProfileServiceImpl implements UserProfileService {
 		return userProfileDao.findAll();
 	}
 
+	@Override
+	public UserProfile findByUsernameAndpPassword(String username, String password) {
+		// TODO Auto-generated method stub
+		try{
+			return userProfileDao.findByUsernameAndPassword(username, password);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }

@@ -9,4 +9,6 @@ import com.jamie.secret.model.UserProfile;
 public interface UserProfileDao extends JpaRepository<UserProfile,Long> {
 
 	List<UserProfile> findAll();
+	
+	UserProfile findByUsernameAndPassword(String username,String password);
 }
