@@ -8,5 +8,7 @@ public interface UserProfileService {
 	
 	List<UserProfile> findAll();
 	
+	UserProfile findByUsername(String username);
+	
 	UserProfile findByUsernameAndpPassword(String username,String password);
 }

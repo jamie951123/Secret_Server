@@ -31,4 +31,15 @@ public class UserProfileServiceImpl implements UserProfileService {
 		}
 	}
 
+	@Override
+	public UserProfile findByUsername(String username) {
+		// TODO Auto-generated method stub
+		try{
+			return userProfileDao.findByUsername(username);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }

@@ -12,11 +12,13 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import com.jamie.secret.jwt.security.JwtAuthenticationFilter;
 import com.jamie.secret.jwt.security.JwtUtil;
+
 
 @ComponentScan
 @EnableAutoConfiguration

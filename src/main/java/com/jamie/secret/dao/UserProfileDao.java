@@ -10,5 +10,7 @@ public interface UserProfileDao extends JpaRepository<UserProfile,Long> {
 
 	List<UserProfile> findAll();
 	
+	UserProfile findByUsername(String username);
+	
 	UserProfile findByUsernameAndPassword(String username,String password);
 }
