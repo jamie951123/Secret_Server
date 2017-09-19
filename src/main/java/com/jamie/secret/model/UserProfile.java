@@ -33,6 +33,19 @@ public @Data class UserProfile extends SecretHome implements Serializable {
 	@Column(name = "password")
 	private String password;
 
+	@Column(name = "role")
+	@Enumerated(EnumType.STRING)
+	private Role role;
+	
+	
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	public Long getUserProfileId() {
 		return userProfileId;
 	}

@@ -1,15 +1,16 @@
 package com.jamie.secret.jwt.security;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.jamie.secret.core.util.ObjectUtils;
 import com.jamie.secret.exception.TokenValidationException;
-import com.jamie.secret.model.UserProfile;
+import com.jamie.secret.model.Role;
 import com.jamie.secret.service.UserProfileService;
-import com.jamie.secret.service.UserProfileServiceImpl;
 
 @Service
 public class ValidateTokenServiceImpl implements ValidateTokenService {
@@ -27,23 +28,52 @@ public class ValidateTokenServiceImpl implements ValidateTokenService {
 			String sub = (String) (body.get("sub"));
 			long iat = (long) (body.get("iat"));
 			long expired = (long) (body.get("expired"));
-			log.info("iss: " + iss);
-			log.info("sub: " + sub);
-			log.info("iat: " + iat);
-			log.info("expired: " + expired);
+			Role role = (Role)(body.get("role"));
 			
-			userProfileService = new UserProfileServiceImpl();
-			UserProfile userProfile = userProfileService.findByUsername(sub);
-			if(userProfile != null){
+			checkTokenThrowException(iss,sub,iat,expired,role);
+
+//			19/9/2017 -- Future may be encode the role 
+			if(Role.GENERAL == role){
 				return true;
+			}else{
+				throw new TokenValidationException("[Token] -- Account do not have permission");
 			}
+			
 		}catch (Exception e){
-			e.printStackTrace();
-			throw new TokenValidationException("Wrong token without username");
+			throw new TokenValidationException(e.getMessage());
 		}
-		return false;
 	}
 
-	
+	private void checkTokenThrowException(String iss, String sub,long iat,long expired,Role role){
+		if(ObjectUtils.isNotNullEmpty(iss)){
+			log.info("iss: " + iss);
+		}else{
+			throw new TokenValidationException("[Token] -- without iss");
+		}
+		
+		if(ObjectUtils.isNotNullEmpty(sub)){
+			log.info(sub);
+		}else{
+			throw new TokenValidationException("[Token] -- without sub");
+		}
+		
+		if(!Objects.isNull(iat)){
+			log.info("iat: " + iat);
+		}else{
+			throw new TokenValidationException("[Token] -- without iat");
+		}
+		
+		if(!Objects.isNull(expired)){
+			log.info("expired: " + expired);
+		}else{
+			throw new TokenValidationException("[Token] -- without expired");
+		}
+		
+		if(role != null){
+			log.info("role: " + role);
+		}else{
+			throw new TokenValidationException("[Token] -- without role");
+		}
+	}
 	
 }

@@ -27,12 +27,14 @@ import com.jamie.secret.jwt.security.JwtUtil;
 public class Application extends SpringBootServletInitializer{
 
 	 @Autowired
-	    private ServletContext servletContext;
+     private ServletContext servletContext;
 	 
+	 @Autowired
+	 private JwtAuthenticationFilter filter;
 	 @Override
-	    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-	        return application.sources(Application.class);
-	    }
+	 protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
+	 }
 	 
    public static void main(String[] args) {
        SpringApplication.run(Application.class, args);
@@ -56,8 +58,6 @@ public class Application extends SpringBootServletInitializer{
    @Bean
    public FilterRegistrationBean jwtFilter() {
        final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-       JwtAuthenticationFilter filter = new JwtAuthenticationFilter(
-               JwtUtil.TOKEN_PATTERN);
        registrationBean.setFilter(filter);
        return registrationBean;
    }

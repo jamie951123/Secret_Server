@@ -20,7 +20,7 @@ import com.jamie.secret.model.UserProfile;
 @RequestMapping(value="/secret/login")
 @Controller
 public class LoginController {
-	Logger log = LoggerFactory.getLogger(LoginController.class);
+	Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	
 	@Autowired

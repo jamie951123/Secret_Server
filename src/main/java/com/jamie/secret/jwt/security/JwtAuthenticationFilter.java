@@ -7,25 +7,25 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.jamie.secret.exception.TokenValidationException;
+
+@Service
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-	
-	 private final String protectUrlPattern;
+	Logger log = LoggerFactory.getLogger(this.getClass());
+
 	 private static final PathMatcher pathMatcher = new AntPathMatcher();
 
 	 @Autowired
-	 ValidateTokenService validateTokenService;
+	 public ValidateTokenService validateTokenService;
 	 
-	    public JwtAuthenticationFilter(String protectUrlPattern) {
-	        this.protectUrlPattern = protectUrlPattern;
-	    }
 	    
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -33,14 +33,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		// TODO Auto-generated method stub
 		
 		try {
-	           if(pathMatcher.match(protectUrlPattern, request.getServletPath())) {
+	           if(pathMatcher.match(JwtUtil.TOKEN_PATTERN, request.getServletPath())) {
 	               String token = request.getHeader(JwtUtil.HEADER_STRING);
-	               validateTokenService = new ValidateTokenServiceImpl();
 	               validateTokenService.validate_General(token);
 	           }
 	       } catch (Exception e) {
 	           response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
-	           return;
+	           throw e;
 	       }
 	       filterChain.doFilter(request, response);
 	

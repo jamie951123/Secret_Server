@@ -15,7 +15,6 @@ import com.jamie.secret.model.UserProfile;
 import com.jamie.secret.service.UserProfileService;
 
 @RequestMapping(value="/secret/authentication")
-//@RequestMapping(value="/jamie")
 @Controller
 public class UserProfileController {
 	Logger log = LoggerFactory.getLogger(UserProfileController.class);

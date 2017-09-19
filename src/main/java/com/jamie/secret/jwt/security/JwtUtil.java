@@ -34,6 +34,7 @@ public class JwtUtil {
                     .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
                     .getBody();
             return body;
+            //[Token] -- Token is expired
         }else{
             throw new TokenValidationException("Missing token");
         }
