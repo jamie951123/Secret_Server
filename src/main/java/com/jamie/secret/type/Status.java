@@ -1,4 +1,4 @@
-package com.jamie.secret.model;
+package com.jamie.secret.type;
 
 public enum Status {
 	PROGRESS,

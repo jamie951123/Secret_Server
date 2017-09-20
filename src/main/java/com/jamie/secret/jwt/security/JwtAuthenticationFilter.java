@@ -1,6 +1,7 @@
 package com.jamie.secret.jwt.security;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.jamie.secret.core.util.ObjectUtils;
 import com.jamie.secret.exception.TokenValidationException;
 
 @Service
@@ -33,15 +35,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		// TODO Auto-generated method stub
 		
 		try {
-	           if(pathMatcher.match(JwtUtil.TOKEN_PATTERN, request.getServletPath())) {
+	           if(pathMatcher.match(FilterPattern.Pattern_UserProfile_Controller, request.getServletPath())) {
 	               String token = request.getHeader(JwtUtil.HEADER_STRING);
-	               validateTokenService.validate_General(token);
+	               validateTokenService.validate_login_general(token);
+	           }else if(pathMatcher.match(FilterPattern.Pattern_Registration_Controller, request.getServletPath())) {
+	        	   String token = request.getHeader(JwtUtil.HEADER_REGISTRATION);
+	        	   validateTokenService.validate_registration_token(token);
 	           }
 	       } catch (Exception e) {
 	           response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
 	           throw e;
 	       }
+		try{
 	       filterChain.doFilter(request, response);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 	
 	}
 

@@ -11,6 +11,7 @@ import com.jamie.secret.core.util.ObjectUtils;
 import com.jamie.secret.exception.TokenValidationException;
 import com.jamie.secret.model.Role;
 import com.jamie.secret.service.UserProfileService;
+import com.jamie.secret.type.TokenType;
 
 @Service
 public class ValidateTokenServiceImpl implements ValidateTokenService {
@@ -18,9 +19,9 @@ public class ValidateTokenServiceImpl implements ValidateTokenService {
 	
 	
 	UserProfileService userProfileService;
-	
+
 	@Override
-	public boolean validate_General(String token) {
+	public boolean validate_login_general(String token) {
 		// TODO Auto-generated method stub
 		Map<String,Object> body = JwtUtil.validateToken(token);
 		try{
@@ -28,7 +29,7 @@ public class ValidateTokenServiceImpl implements ValidateTokenService {
 			String sub = (String) (body.get("sub"));
 			long iat = (long) (body.get("iat"));
 			long expired = (long) (body.get("expired"));
-			Role role = (Role)(body.get("role"));
+			Role role = Role.valueOf((String)(body.get("role")));
 			
 			checkTokenThrowException(iss,sub,iat,expired,role);
 
@@ -44,6 +45,23 @@ public class ValidateTokenServiceImpl implements ValidateTokenService {
 		}
 	}
 
+	@Override
+	public boolean validate_registration_token(String token) {
+		// TODO Auto-generated method stub
+		Map<String,Object> body = JwtUtil.validateToken(token);
+		try{
+			TokenType tokenType = TokenType.valueOf((String)body.get("token_type"));
+			
+			if(tokenType != null && TokenType.APPLY == tokenType){
+				return true;
+			}else {
+				throw new TokenValidationException("[Token] -- Registration Token is wrong");
+			}
+		}catch (Exception e){
+			throw new TokenValidationException(e.getMessage());
+		}
+	}
+	
 	private void checkTokenThrowException(String iss, String sub,long iat,long expired,Role role){
 		if(ObjectUtils.isNotNullEmpty(iss)){
 			log.info("iss: " + iss);
@@ -75,5 +93,4 @@ public class ValidateTokenServiceImpl implements ValidateTokenService {
 			throw new TokenValidationException("[Token] -- without role");
 		}
 	}
-	
 }

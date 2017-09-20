@@ -14,30 +14,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jamie.secret.jwt.security.GenerateTokenService;
 import com.jamie.secret.jwt.security.JwtUtil;
-import com.jamie.secret.model.UserProfile;
-import com.jamie.secret.service.LoginService;
+import com.jamie.secret.model.TokenModel;
 
-@RequestMapping(value="/secret/login")
+@RequestMapping(value="/secret/token/request")
 @Controller
-public class LoginController {
+public class TokenController {
 	Logger log = LoggerFactory.getLogger(this.getClass());
 	
+	@Autowired 
+	private GenerateTokenService generateTokenService;
 	
-	@Autowired
-	LoginService loginService;
-	
-	@Autowired
-	GenerateTokenService generateTokenService;
-	
-	 @PostMapping("/general")
-	    public void login(HttpServletResponse response,
-	                      @RequestBody final UserProfile userProfile) throws IOException {
-		 UserProfile u = loginService.generalChecking(userProfile);
-	        if(u != null) {
-	            String token = generateTokenService.login_general_token(u);
-	            response.addHeader(JwtUtil.HEADER_STRING, JwtUtil.TOKEN_PREFIX + " " + token);
+	@PostMapping("/registration")
+	 public void login(HttpServletResponse response,
+            @RequestBody final TokenModel tokenModel) throws IOException {
+		try{
+			if(tokenModel != null && tokenModel.getMacAddress() != null){
+				String token = generateTokenService.registration_token(tokenModel);
+				response.addHeader(JwtUtil.HEADER_REGISTRATION, JwtUtil.TOKEN_PREFIX + " " + token);
 	        }else
 	            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Wrong credentials");
-	    }
-	  
+		}catch (Exception e){
+			
+		}
+	}
 }

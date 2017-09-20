@@ -9,6 +9,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.jamie.secret.type.Status;
+
 import lombok.Data;
 import lombok.ToString;
 
@@ -95,6 +97,13 @@ public @Data class SecretHome {
 
 	public void setCloseDate(Date closeDate) {
 		this.closeDate = closeDate;
+	}
+
+	@Override
+	public String toString() {
+		return "SecretHome [partyId=" + partyId + ", status=" + status + ", createDate=" + createDate + ", createBy="
+				+ createBy + ", lastModifiedDate=" + lastModifiedDate + ", lastModifiedBy=" + lastModifiedBy
+				+ ", closeDate=" + closeDate + "]";
 	}
 	
 	

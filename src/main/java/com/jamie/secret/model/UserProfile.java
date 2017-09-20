@@ -73,6 +73,12 @@ public @Data class UserProfile extends SecretHome implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	@Override
+	public String toString() {
+		return "UserProfile [userProfileId=" + userProfileId + ", username=" + username + ", password=" + password
+				+ ", role=" + role + "]";
+	}
 	
 	
 

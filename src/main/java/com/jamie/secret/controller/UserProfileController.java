@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.jamie.secret.model.UserProfile;
 import com.jamie.secret.service.UserProfileService;
 
-@RequestMapping(value="/secret/authentication")
+@RequestMapping(value="/secret/authentication/user")
 @Controller
 public class UserProfileController {
 	Logger log = LoggerFactory.getLogger(UserProfileController.class);
@@ -33,4 +33,13 @@ public class UserProfileController {
 		log.info("[UserProfile]-[findAll]-User Response() : "+ userProfiles);
 		return userProfiles;
 	} 
+	
+////	Save  
+//	@Transactional(rollbackFor = Exception.class)
+//	@PostMapping(value = "/save",produces="application/json;charset=UTF-8")
+//	public @ResponseBody UserProfile save(@RequestBody String userProfile_json){
+//		log.info("[UserProfile]-[save]-User Request(JSON) : "+ userProfile_json);
+//		System.out.println("Token Successful");
+//		return null;
+//	}
 }

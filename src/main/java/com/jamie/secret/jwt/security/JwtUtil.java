@@ -11,11 +11,12 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 public class JwtUtil {
 	static final String iss = "System";
+	static final long REGISTRATION_EXPIRATION_TIME = 1800*1000;
     static final long EXPIRATION_TIME = 3600*1000; // 1 hour
     static final String SECRET = "JamieSever";
-    public static final String TOKEN_PATTERN = "/secret/authentication/**";
     public static final String TOKEN_PREFIX = "Token:";
     public static final String HEADER_STRING = "Authorization";
+    public static final String HEADER_REGISTRATION = "Registration";
     
     public static String generateToken(LinkedHashMap<String, Object> map) {
         String jwt = Jwts.builder()
